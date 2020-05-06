@@ -3,6 +3,7 @@ package com.example.twitterclone;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             setupSignUpView();
         }
+        checkIfUserLoggedIn();
         setupClickListeners();
 
         // checking how much the user has used the app
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 String username = getUsername();
                 String password = getPassword();
 
-                if (signUpLoginButton.getText().equals(getString(R.string.sign_up))) {
+                if (!isLogin()) {
                     if (areUsernamePassword1Password2FieldsValid(username, password, getPassword2())) {
                         signUpUser(username, password);
                     }
@@ -130,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             public void done(ParseUser user, ParseException e) {
                 if (e == null && user != null) {
                     ToastUtils.showToast(context, getString(R.string.login_successful));
-//                    goToUserListActivity();
+                    goToUserListActivity();
                 } else if (e != null) {
                     ToastUtils.showToast(context, e.getMessage());
                 }
@@ -159,11 +161,34 @@ public class MainActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     ToastUtils.showToast(context, getString(R.string.sign_up_successful));
-//                    goToUserListActivity();
+                    goToUserListActivity();
                 } else {
                     ToastUtils.showToast(context, e.getMessage());
                 }
             }
         });
+    }
+
+    private void goToUserListActivity() {
+        Intent gotToUserListActivityIntent = new Intent(context, UserListActivity.class);
+        startActivity(gotToUserListActivityIntent);
+        clearEditTextFields();
+    }
+
+    private boolean isLogin() {
+        isLogin = signUpLoginButton.getText().equals(getString(R.string.login));
+        return isLogin;
+    }
+
+    private void checkIfUserLoggedIn() {
+        if (ParseUser.getCurrentUser() != null) {
+            goToUserListActivity();
+        }
+    }
+
+    private void clearEditTextFields() {
+        usernameEditText.setText("");
+        passwordEditText.setText("");
+        password2EditText.setText("");
     }
 }
