@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">TwitterClone</string>
+    <string name="logo">Logo</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign up</string>
+    <string name="switch_to_sign_up">No account yet? Sign up!</string>
+    <string name="switch_to_login">Have an account? Login!</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="username_password_required">Username and password required</string>
+    <string name="username_or_password_too_short">Username and password must contain at least 4 characters</string>
+    <string name="no_spaces_allowed">No spaces allowed in the username and password</string>
+    <string name="sign_up_successful">You successfully signed up</string>
+    <string name="login_successful">You have successfully logged in</string>
 </resources>
