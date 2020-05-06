@@ -17,4 +17,14 @@
     <string name="user_list">User list</string>
     <string name="person_image_content_description">Person image</string>
     <string name="username_key">username</string>
+    <string name="logout">Logout</string>
+    <string name="tweet">Tweet</string>
+    <string name="your_feed">Your feed</string>
+    <string name="no_tweets_available">No tweets available</string>
+    <string name="users_key">users</string>
+    <string name="follow">Follow user</string>
+    <string name="user_unfollowed">User has been unfollowed</string>
+    <string name="user_followed">User has been followed</string>
+    <string name="tweet_table_key">Tweet</string>
+    <string name="tweet_key">tweet</string>
 </resources>

@@ -1,9 +1,11 @@
 package com.example.twitterclone;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,10 +17,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     private List<User> users;
     private RecyclerViewClickListener listener;
+    private List<User> followedUsers;
 
-    public UserListAdapter(List<User> users, RecyclerViewClickListener listener) {
+    public UserListAdapter(List<User> users, RecyclerViewClickListener listener, List<User> followedUsers) {
         this.users = users;
         this.listener = listener;
+        this.followedUsers = followedUsers;
     }
 
     public interface RecyclerViewClickListener {
@@ -41,6 +45,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
         TextView usernameTextView = holder.userUsernameTextView;
         usernameTextView.setText(user.getUsername());
+        ImageView imageView = holder.followUnfollowImage;
+
+        if (followedUsers.contains(user)) {
+            imageView.setImageResource(R.mipmap.ic_follow);
+        } else {
+            imageView.setImageResource(R.mipmap.ic_unfollow);
+        }
     }
 
     @Override
@@ -54,6 +65,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView userUsernameTextView;
+        private ImageView followUnfollowImage;
 
         public ViewHolder(@NonNull View itemView, RecyclerViewClickListener clickListener) {
             super(itemView);
@@ -62,6 +74,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
             itemView.setOnClickListener(this);
 
             userUsernameTextView = itemView.findViewById(R.id.user_username_text_view);
+            followUnfollowImage = itemView.findViewById(R.id.follow_unfollow_image);
         }
 
         @Override
