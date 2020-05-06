@@ -7,20 +7,31 @@
     android:padding="16dp"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/tweet_image_view"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@mipmap/ic_launcher"
+        android:paddingRight="16dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/person_image_content_description" />
+
     <TextView
         android:id="@+id/user_tweet_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/colorPrimaryText"
+        app:layout_constraintStart_toEndOf="@id/tweet_image_view"
+        app:layout_constraintTop_toTopOf="@id/tweet_image_view"
         tools:text="Hello from Maja" />
 
     <TextView
         android:id="@+id/user_username_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/user_tweet_text_view"
         app:layout_constraintTop_toBottomOf="@id/user_tweet_text_view"
         tools:text="maja" />
 
