@@ -27,4 +27,9 @@
     <string name="user_followed">User has been followed</string>
     <string name="tweet_table_key">Tweet</string>
     <string name="tweet_key">tweet</string>
+    <string name="send_tweet">Send a Tweet</string>
+    <string name="send">send</string>
+    <string name="cancel">Cancel</string>
+    <string name="tweet_sent">Tweet sent</string>
+    <string name="tweet_not_sent">Tweet not saved</string>
 </resources>

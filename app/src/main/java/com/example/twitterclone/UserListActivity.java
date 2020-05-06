@@ -1,26 +1,35 @@
 package com.example.twitterclone;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,6 +124,7 @@ public class UserListActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.tweet:
+                sendTweet();
                 return true;
             case R.id.your_feed:
                 goToUserFeed(followedUsers);
@@ -124,6 +134,46 @@ public class UserListActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void sendTweet() {
+        final EditText tweetEditText = new EditText(context);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        tweetEditText.setLayoutParams(layoutParams);
+
+        new AlertDialog.Builder(context)
+                .setTitle(getString(R.string.send_tweet))
+                .setView(tweetEditText)
+                .setPositiveButton(getString(R.string.send), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, int which) {
+                        String tweet = tweetEditText.getText().toString();
+                        String username = ParseUser.getCurrentUser().getUsername();
+                        ParseObject newTweet = new ParseObject(getString(R.string.tweet_table_key));
+                        newTweet.put(getString(R.string.username_key), username);
+                        newTweet.put(getString(R.string.tweet_key), tweet);
+                        newTweet.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    ToastUtils.showToast(context, getString(R.string.tweet_sent));
+                                } else {
+                                    ToastUtils.showToast(context, getString(R.string.tweet_not_sent));
+                                }
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
     }
 
     private void goToUserFeed(List<User> users) {
