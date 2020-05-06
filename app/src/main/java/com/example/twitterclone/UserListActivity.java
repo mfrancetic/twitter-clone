@@ -38,9 +38,9 @@ public class UserListActivity extends AppCompatActivity {
 
     private RecyclerView userRecyclerView;
     private UserListAdapter userListAdapter;
-    private List<User> followedUsers;
     private Context context;
-    private List<User> users;
+    private ArrayList<String> users;
+    private ArrayList<String> followedUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +49,10 @@ public class UserListActivity extends AppCompatActivity {
 
         setTitle(getString(R.string.user_list));
         context = UserListActivity.this;
-        followedUsers = new ArrayList<>();
         findViews();
 
         getUsers();
+        getFollowedUsers();
     }
 
     private void findViews() {
@@ -69,12 +69,20 @@ public class UserListActivity extends AppCompatActivity {
             public void done(List<ParseUser> parseUsers, ParseException e) {
                 if (e == null && parseUsers.size() > 0) {
                     for (ParseUser user : parseUsers) {
-                        users.add(new User(user.getUsername()));
+                        users.add(user.getUsername());
                     }
                     setupRecyclerView();
                 }
             }
         });
+    }
+
+    private void getFollowedUsers() {
+        followedUsers = new ArrayList<>();
+        List<String> followedUserNames = ParseUser.getCurrentUser().getList(getString(R.string.followed_users_key));
+        if (followedUserNames != null && followedUserNames.size() > 0) {
+            followedUsers.addAll(followedUserNames);
+        }
     }
 
     private void setupRecyclerView() {
@@ -92,7 +100,7 @@ public class UserListActivity extends AppCompatActivity {
         userRecyclerView.addItemDecoration(decoration);
     }
 
-    private void followUnfollowUser(User user) {
+    private void followUnfollowUser(String user) {
         if (followedUsers.contains(user)) {
             unfollowUser(user);
         } else {
@@ -100,15 +108,37 @@ public class UserListActivity extends AppCompatActivity {
         }
     }
 
-    private void unfollowUser(User user) {
+    private void unfollowUser(String user) {
         followedUsers.remove(user);
-        ToastUtils.showToast(context, getString(R.string.user_unfollowed));
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.put(getString(R.string.followed_users_key), followedUsers);
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    ToastUtils.showToast(context, getString(R.string.user_unfollowed));
+                } else {
+                    ToastUtils.showToast(context, e.getMessage());
+                }
+            }
+        });
         userListAdapter.notifyDataSetChanged();
     }
 
-    private void followUser(User user) {
+    private void followUser(String user) {
         followedUsers.add(user);
-        ToastUtils.showToast(context, getString(R.string.user_followed));
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.put(getString(R.string.followed_users_key), followedUsers);
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    ToastUtils.showToast(context, getString(R.string.user_followed));
+                } else {
+                    ToastUtils.showToast(context, e.getMessage());
+                }
+            }
+        });
         userListAdapter.notifyDataSetChanged();
     }
 
@@ -176,13 +206,9 @@ public class UserListActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void goToUserFeed(List<User> users) {
+    private void goToUserFeed(ArrayList<String> followedUsers) {
         Intent goToUserFeedIntent = new Intent(context, UserFeedActivity.class);
-        ArrayList<String> usersUsernames = new ArrayList<>();
-        for (User user : users) {
-            usersUsernames.add(user.getUsername());
-        }
-        goToUserFeedIntent.putStringArrayListExtra(getString(R.string.users_key), usersUsernames);
+        goToUserFeedIntent.putStringArrayListExtra(getString(R.string.users_key), followedUsers);
         startActivity(goToUserFeedIntent);
     }
 

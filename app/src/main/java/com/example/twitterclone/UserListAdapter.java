@@ -15,11 +15,11 @@ import java.util.List;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
-    private List<User> users;
+    private List<String> users;
     private RecyclerViewClickListener listener;
-    private List<User> followedUsers;
+    private List<String> followedUsers;
 
-    public UserListAdapter(List<User> users, RecyclerViewClickListener listener, List<User> followedUsers) {
+    public UserListAdapter(List<String> users, RecyclerViewClickListener listener, List<String> followedUsers) {
         this.users = users;
         this.listener = listener;
         this.followedUsers = followedUsers;
@@ -41,10 +41,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull UserListAdapter.ViewHolder holder, int position) {
-        User user = users.get(position);
+        String user = users.get(position);
 
         TextView usernameTextView = holder.userUsernameTextView;
-        usernameTextView.setText(user.getUsername());
+        usernameTextView.setText(user);
         ImageView imageView = holder.followUnfollowImage;
 
         if (followedUsers.contains(user)) {
