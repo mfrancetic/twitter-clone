@@ -36,4 +36,13 @@
         app:layout_constraintTop_toBottomOf="@id/user_tweet_text_view"
         tools:text="maja" />
 
+    <TextView
+        android:id="@+id/user_created_at_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/user_tweet_text_view"
+        app:layout_constraintBottom_toBottomOf="@id/user_tweet_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="2020-05-06 14:00:27" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

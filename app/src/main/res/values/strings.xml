@@ -34,4 +34,5 @@
     <string name="tweet_not_sent">Tweet failed</string>
     <string name="followed_users_key">followedUsers</string>
     <string name="user_table_key">User</string>
+    <string name="created_at_key">createdAt</string>
 </resources>

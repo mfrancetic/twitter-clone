@@ -4,10 +4,17 @@ public class Tweet {
 
     private String username;
     private String tweet;
+    private String createdAt;
 
     public Tweet(String username, String tweet) {
         this.username = username;
         this.tweet = tweet;
+    }
+
+    public Tweet(String username, String tweet, String createdAt) {
+        this.username = username;
+        this.tweet = tweet;
+        this.createdAt = createdAt;
     }
 
     public String getUsername() {
@@ -20,5 +27,9 @@ public class Tweet {
 
     public void setTweet(String tweet) {
         this.tweet = tweet;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
     }
 }

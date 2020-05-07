@@ -17,9 +17,12 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class UserFeedActivity extends AppCompatActivity {
 
@@ -67,7 +70,7 @@ public class UserFeedActivity extends AppCompatActivity {
         if (usernames != null) {
             ParseQuery<ParseObject> query = new ParseQuery<>(getString(R.string.tweet_table_key));
             query.whereContainedIn(getString(R.string.username_key), usernames);
-            query.addAscendingOrder(getString(R.string.username_key));
+            query.orderByDescending(getString(R.string.created_at_key));
             query.findInBackground(new FindCallback<ParseObject>() {
                 @Override
                 public void done(List<ParseObject> objects, ParseException e) {
@@ -75,7 +78,9 @@ public class UserFeedActivity extends AppCompatActivity {
                         for (ParseObject object : objects) {
                             String username = object.getString(getString(R.string.username_key));
                             String tweet = object.getString(getString(R.string.tweet_key));
-                            tweets.add(new Tweet(username, tweet));
+                            Date createdAtDate = object.getCreatedAt();
+                            String createdAt = formatDateToString(createdAtDate);
+                            tweets.add(new Tweet(username, tweet, createdAt));
                         }
                         removeEmptyView();
                         userFeedAdapter.notifyDataSetChanged();
@@ -97,5 +102,10 @@ public class UserFeedActivity extends AppCompatActivity {
         userFeedRecyclerView.setVisibility(View.GONE);
         emptyTextView.setVisibility(View.VISIBLE);
         emptyImageView.setVisibility(View.VISIBLE);
+    }
+
+    private String formatDateToString (Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return formatter.format(date);
     }
 }

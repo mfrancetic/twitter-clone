@@ -43,6 +43,8 @@ public class UserFeedAdapter extends RecyclerView.Adapter<com.example.twitterclo
         usernameTextView.setText(tweet.getUsername());
         TextView tweetTextView = holder.userTweetTextView;
         tweetTextView.setText(tweet.getTweet());
+        TextView createdAtTextView = holder.userCreatedAtTextView;
+        createdAtTextView.setText(tweet.getCreatedAt());
     }
 
     @Override
@@ -57,6 +59,7 @@ public class UserFeedAdapter extends RecyclerView.Adapter<com.example.twitterclo
 
         private TextView userUsernameTextView;
         private TextView userTweetTextView;
+        private TextView userCreatedAtTextView;
 
         public ViewHolder(@NonNull View itemView, UserFeedAdapter.RecyclerViewClickListener clickListener) {
             super(itemView);
@@ -66,6 +69,7 @@ public class UserFeedAdapter extends RecyclerView.Adapter<com.example.twitterclo
 
             userUsernameTextView = itemView.findViewById(R.id.user_username_text_view);
             userTweetTextView = itemView.findViewById(R.id.user_tweet_text_view);
+            userCreatedAtTextView = itemView.findViewById(R.id.user_created_at_text_view);
         }
 
         @Override
