@@ -2,5 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/tweet" android:title="@string/tweet"/>
     <item android:id="@+id/your_feed" android:title="@string/your_feed"/>
+    <item android:id="@+id/your_tweets" android:title="@string/your_tweets"/>
 <item android:id="@+id/logout" android:title="@string/logout"/>
 </menu>

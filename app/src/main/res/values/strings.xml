@@ -18,7 +18,7 @@
     <string name="person_image_content_description">Person image</string>
     <string name="username_key">username</string>
     <string name="logout">Logout</string>
-    <string name="tweet">Tweet</string>
+    <string name="tweet">Send tweet</string>
     <string name="your_feed">Your feed</string>
     <string name="no_tweets_available">No tweets available</string>
     <string name="users_key">users</string>
@@ -35,4 +35,6 @@
     <string name="followed_users_key">followedUsers</string>
     <string name="user_table_key">User</string>
     <string name="created_at_key">createdAt</string>
+    <string name="user_feed">User Feed</string>
+    <string name="your_tweets">Your tweets</string>
 </resources>

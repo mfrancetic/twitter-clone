@@ -15,14 +15,12 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+
+import static com.example.twitterclone.DateTimeUtils.formatDateToString;
 
 public class UserFeedActivity extends AppCompatActivity {
 
@@ -37,6 +35,7 @@ public class UserFeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_feed);
 
+        setTitle(getString(R.string.user_feed));
         findViews();
         setupRecyclerView();
         getUsersAndTweets();
@@ -102,10 +101,5 @@ public class UserFeedActivity extends AppCompatActivity {
         userFeedRecyclerView.setVisibility(View.GONE);
         emptyTextView.setVisibility(View.VISIBLE);
         emptyImageView.setVisibility(View.VISIBLE);
-    }
-
-    private String formatDateToString (Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        return formatter.format(date);
     }
 }

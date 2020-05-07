@@ -159,11 +159,19 @@ public class UserListActivity extends AppCompatActivity {
             case R.id.your_feed:
                 goToUserFeed(followedUsers);
                 return true;
+            case R.id.your_tweets:
+                goToYourFeed();
+                return true;
             case R.id.logout:
                 logoutUser();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void goToYourFeed() {
+        Intent intent = new Intent(context, YourFeedActivity.class);
+        startActivity(intent);
     }
 
     private void sendTweet() {
