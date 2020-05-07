@@ -79,7 +79,8 @@ public class UserFeedActivity extends AppCompatActivity {
                             String tweet = object.getString(getString(R.string.tweet_key));
                             Date createdAtDate = object.getCreatedAt();
                             String createdAt = formatDateToString(createdAtDate);
-                            tweets.add(new Tweet(username, tweet, createdAt));
+                            String objectId = object.getObjectId();
+                            tweets.add(new Tweet(username, tweet, createdAt, objectId));
                         }
                         removeEmptyView();
                         userFeedAdapter.notifyDataSetChanged();
